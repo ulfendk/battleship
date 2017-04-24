@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Gør dit spil klar";
+}
+@model battleship.Models.PlayerSetup
+
+<h2>@ViewData["Title"].</h2>
+<h3>@ViewData["Message"]</h3>
+
+@using (Html.BeginRouteForm("ConfigurePlayer", FormMethod.Post))
+{
+    @Html.HiddenFor(m => m.PlayerId)
+
+    <p>Name:</p>
+    @Html.TextBoxFor(m => m.Name)
+
+    <p>IsHorizontal:</p>
+    @Html.CheckBoxFor(m => m.IsShipHorizontal)
+
+    <p>Ship X:</p>
+    @Html.TextBoxFor(m => m.ShipX)
+
+    <p>Ship Y:</p>
+    @Html.TextBoxFor(m => m.ShipY)
+
+    <input type="submit" value="Fortsæt" />
+}

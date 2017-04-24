@@ -1,0 +1,12 @@
+﻿@{
+    ViewData["Title"] = Model.Name;
+}
+@model battleship.Models.Player
+
+<h2>@ViewData["Title"].</h2>
+<h3>@ViewData["Message"]</h3>
+
+@if (Model.Game.WinnerId == Model.PlayerId)
+{
+    <p><b>Du vandt!</b></p>
+}

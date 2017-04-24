@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "About";
+}
+@model battleship.Models.Game
+
+<h2>@ViewData["Title"].</h2>
+<h3>@ViewData["Message"]</h3>
+
+<p>Use this area to provide additional information.</p>
+
+Game id:
+@Model.GameId
+
+Player ID:
+@Model.Players[0].PlayerId

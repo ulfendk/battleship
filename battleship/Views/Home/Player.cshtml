@@ -1,0 +1,57 @@
+﻿@{
+    ViewData["Title"] = Model.Name;
+}
+@model battleship.Models.Player
+
+<h2>@ViewData["Title"].</h2>
+<h3>@ViewData["Message"]</h3>
+
+<h2>Modstander</h2>
+
+<table>
+    @for (int y = 0; y < Model.OpponentBoard.GetLength(1); y++)
+    {
+        <tr>
+            @for (int x = 0; x < Model.OpponentBoard.GetLength(0); x++)
+            {
+                <td>
+                    @if (Model.OpponentBoard[x, y] == battleship.Models.OpponentField.Unknown)
+                    {
+                        <a href="@Url.RouteUrl("Shoot", new { playerId = Model.PlayerId, x = x, y = y})">Skyd</a>
+                    }
+                    else if (Model.OpponentBoard[x, y] == battleship.Models.OpponentField.Miss)
+                    {
+                        <span>*</span>
+                    }
+                    else
+                    {
+                        <b>X</b>
+                    }
+                </td>
+            }
+        </tr>
+    }
+</table>
+
+<h2>Eget</h2>
+
+<table>
+    @for (int y = 0; y < Model.OwnBoard.GetLength(1); y++)
+    {
+        <tr>
+            @for (int x = 0; x < Model.OwnBoard.GetLength(0); x++)
+            {
+                <td>
+                    @if (Model.OwnBoard[x, y] == battleship.Models.OwnField.Empty)
+                    {
+                        <span>T</span>
+                    }
+                    else
+                    {
+                        <b>S</b>
+                    }
+                </td>
+            }
+        </tr>
+    }
+</table>
