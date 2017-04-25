@@ -49,6 +49,8 @@ namespace battleship.Controllers
             _ctx.SaveChanges();
 
             game = _ctx.Games.Find(game.GameId);
+            game.NextPlayerId = game.Players[new Random().Next(game.Players.Count)].PlayerId;
+            _ctx.SaveChanges();
 
             return View(game);
         }
@@ -116,9 +118,16 @@ namespace battleship.Controllers
                 return NotFound();
             }
 
-            if (player.Game.WinnerId == player.PlayerId)
+            if (player.Game.WinnerId.HasValue)
             {
-                return RedirectToAction(nameof(Winner), new { playerId = player.PlayerId });
+                if (player.Game.WinnerId == player.PlayerId)
+                {
+                    return RedirectToAction(nameof(Winner), new { playerId = player.PlayerId });
+                }
+                else
+                {
+                    return RedirectToAction(nameof(Looser), new { playerId = player.PlayerId });
+                }
             }
 
             return View(player);
@@ -170,6 +179,25 @@ namespace battleship.Controllers
             }
 
             if (player.Game.WinnerId == player.PlayerId)
+            {
+                return View(player);
+            }
+
+            return RedirectToAction(nameof(Player), new { playerId = player.PlayerId });
+        }
+
+        [Route("player/{playerId:int}/looser", Name = nameof(Looser))]
+        public IActionResult Looser([FromRoute]int playerId)
+        {
+            var player = _ctx.Players
+                .Include(p => p.Game)
+                .SingleOrDefault(p => p.PlayerId == playerId);
+            if (player == null)
+            {
+                return NotFound();
+            }
+
+            if (player.Game.WinnerId.HasValue && player.Game.WinnerId != player.PlayerId)
             {
                 return View(player);
             }

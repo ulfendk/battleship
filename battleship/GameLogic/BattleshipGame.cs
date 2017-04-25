@@ -27,6 +27,8 @@ namespace battleship.GameLogic
             currentPlayer.SetOpponentField(x, y, thisShot);
             currentPlayer.LastShot = thisShot;
 
+            _game.NextPlayerId = opponentPlayer.PlayerId;
+
             return CheckForWin(currentPlayer, opponentPlayer);
         }
 
