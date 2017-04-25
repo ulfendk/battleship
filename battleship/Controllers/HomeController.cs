@@ -71,7 +71,8 @@ namespace battleship.Controllers
 
             var setup = new PlayerSetup
             {
-                PlayerId = player.PlayerId
+                PlayerId = player.PlayerId,
+				Name = player.Name
             };
 
             return View(setup);
