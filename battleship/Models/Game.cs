@@ -13,6 +13,8 @@ namespace battleship.Models
 
         public int? WinnerId { get; set; }
 
+        public int NextPlayerId { get; set; }
+
         public List<Player> Players { get; set; }
 
         public Player GetOpponentPlayer(Player player)
