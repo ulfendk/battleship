@@ -107,6 +107,26 @@ namespace battleship.Controllers
         }
 
 
+        [Route("player/{playerId:int}/wait", Name = nameof(Wait))]
+        public IActionResult Wait([FromRoute]int playerId)
+        {
+            var player = _ctx.Players
+                .Include(p => p.Game)
+                .SingleOrDefault(p => p.PlayerId == playerId);
+            if (player == null)
+            {
+                return NotFound();
+            }
+
+            if (player.Game.NextPlayerId == player.PlayerId)
+            {
+                return RedirectToAction(nameof(Player), new { playerId = player.PlayerId });
+            }
+
+            return View();
+        }
+
+
         [Route("player/{playerId:int}", Name = nameof(Player))]
         public IActionResult Player([FromRoute]int playerId)
         {
@@ -128,6 +148,11 @@ namespace battleship.Controllers
                 {
                     return RedirectToAction(nameof(Looser), new { playerId = player.PlayerId });
                 }
+            }
+
+            if (player.Game.NextPlayerId != player.PlayerId)
+            {
+                return RedirectToAction(nameof(Wait), new { playerId = player.PlayerId });
             }
 
             return View(player);
@@ -164,7 +189,7 @@ namespace battleship.Controllers
                 return RedirectToAction(nameof(Winner), new { playerId = player.PlayerId });
             }
 
-            return View(player);
+            return RedirectToAction(nameof(Wait), new { playerId = player.PlayerId });
         }
 
         [Route("player/{playerId:int}/winner", Name = nameof(Winner))]
