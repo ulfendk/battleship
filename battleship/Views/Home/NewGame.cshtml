@@ -1,15 +1,17 @@
 ﻿@{
-    ViewData["Title"] = "About";
+    ViewData["Title"] = "Nyt spil klar!";
 }
 @model battleship.Models.Game
 
 <h2>@ViewData["Title"].</h2>
 <h3>@ViewData["Message"]</h3>
 
-<p>Use this area to provide additional information.</p>
 
-Game id:
-@Model.GameId
-
-Player ID:
-@Model.Players[0].PlayerId
+<h2>Players:</h2>
+<p>Brug linksne nedenfor for at spille</p>
+<ul>
+@foreach (var player in Model.Players)
+{
+    <li><a href="@Url.RouteUrl("SetupPlayer", new{ playerId = player.PlayerId})" target="_blank">@player.Name</a></li>
+}
+</ul>

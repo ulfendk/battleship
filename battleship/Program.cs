@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 
 namespace battleship
 {
@@ -12,6 +13,7 @@ namespace battleship
         public static void Main(string[] args)
         {
             var host = new WebHostBuilder()
+                .UseUrls("http://*:5000")
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()

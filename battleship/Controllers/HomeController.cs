@@ -80,7 +80,7 @@ namespace battleship.Controllers
 
         [HttpPost]
         [Route("player/configure", Name = nameof(ConfigurePlayer))]
-        
+
         public async Task<IActionResult> ConfigurePlayer()//[FromBody]PlayerSetup setup)
         {
             var setup = new PlayerSetup();
@@ -143,7 +143,10 @@ namespace battleship.Controllers
 
             var game = new BattleshipGame(player.Game);
             bool isWinner = game.Shoot(player, x.Value, y.Value);
-            player.Game.WinnerId = player.PlayerId;
+            if (isWinner)
+            {
+                player.Game.WinnerId = player.PlayerId;
+            }
 
             _ctx.SaveChanges();
 
